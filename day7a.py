@@ -59,26 +59,26 @@ for line in lines:
         }}
         # all_bags[bag_color] = []
 
-print(all_bags)
-print("="*100)
-# http://kmkeen.com/python-trees/
-bag_list = []
+# print(all_bags)
+# print("="*100)
+checked = []
 
 
-def walk(color):
-    bags = all_bags[color]
-    for b in bags:
-        color = bags[b]['color']
-        if color:
-            print(f"walking: {color}")
-            bag_list.append(color)
-            walk(color)
+def check_bag(color):
+    for k in all_bags[color].keys():
+        if all_bags[color][k]['color']:
+            if all_bags[color][k]['color'] == 'shiny gold':
+                if all_bags[color][k]['color'] not in checked:
+                    checked.append(all_bags[color][k]['color'])
+                break
+            # else:
+            check_bag(all_bags[color][k]['color'])
 
 
-walk('shiny gold')
+for bag in all_bags.keys():
+    # print(bag)
+    check_bag(bag)
 
-# print(bag_list)
-print(len(bag_list))
-
+print(len(checked))
 
 # first: 49
