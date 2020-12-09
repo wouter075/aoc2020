@@ -2,39 +2,34 @@ with open('day8.txt') as f:
     lines = [line.rstrip() for line in f]
 
 instructions = []
+for line in lines:
+    ins, parm = line.split(" ")
+    parm = int(parm)
+    instructions.append([ins, parm])
+
+# print(instructions)
 
 
-def make_inst():
-    instructions = []
-    for line in lines:
-        ins, parm = line.split(" ")
-        parm = int(parm)
-        instructions.append([ins, parm])
-    return instructions
-
-
-instructions = make_inst()
-acc = 0
-walked = []
-
-
-def walk(next):
+def walk(n, i):
     global acc
 
-    inst = instructions[next]
-    if next in walked:
-        return "maxed"
-    else:
-        walked.append(next)
-
+    inst = i[n]
+    did.append(inst)
     if inst[0] == "nop":
-        next += 1
+        n += 1
     if inst[0] == "acc":
         acc += inst[1]
-        next += 1
+        n += 1
     if inst[0] == "jmp":
-        next += inst[1]
-    walk(next)
+        n += inst[1]
+    # try:
+    walk(n, i)
+    # except IndexError:
+    #     # print("index")
+    #     return "index"
+    # except RecursionError:
+    #     # print("recursion")
+    #     return "maxed"
 
 
 def inst_count(inst):
@@ -45,43 +40,51 @@ def inst_count(inst):
     return c
 
 
-def inst_change(inst, new_inst, pos):
+def inst_change(old_inst, new_inst, pos):
     c = 0
-    for i in instructions:
-        if i[0] == inst:
+    ic = instructions
+    ni = []
+    for k, v in ic:
+        if k == old_inst:
             if c == pos:
-                i[0] = new_inst
+                k = new_inst
             c += 1
-    return instructions
+        ni.append([k, v])
+    return ni
 
 
-#
-# walk(0)
-# print(acc)
-#
-# jpm, nop
 nop = inst_count("nop")
 jmp = inst_count("jmp")
 
-print(f"{nop}, {jmp}")
-# print(instructions)
-for n in range(0, nop):
-    # print(f"nop -> jmp: {n}")
-    instructions = inst_change("nop", "jmp", n)
-    # print(instructions)
-    if walk(0) is not "maxed":
-        print(acc)
-    instructions = make_inst()
-
-# print(instructions)
-# print("-"*20)
-for n in range(0, jmp):
-    # print(f"jmp -> nop: {n}")
-    instructions = inst_change("jmp", "nop", n)
-    # print(instructions)
-    if walk(0) is not "maxed":
+# walked = []
+# did = []
+# acc = 0
+# walk(0, instructions)
+# print(acc)
+for nn in range(0, nop):
+    walked = []
+    did = []
+    acc = 0
+    nnop = inst_change("nop", "jmp", nn)
+    try:
+        walk(0, nnop)
+    except RecursionError:
+        continue
+    except IndexError:
         print(acc)
 
-    instructions = make_inst()
+for nj in range(0, jmp):
+    walked = []
+    did = []
+    acc = 0
+    njmp = inst_change("jmp", "nop", nj)
+    # print(njmp)
+    try:
+        walk(0, njmp)
+    except RecursionError:
+        continue
 
-# 1262, to low
+    except IndexError:
+        print(acc)
+
+# 2, 6982, to high

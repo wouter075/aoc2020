@@ -6,36 +6,33 @@ instructions = []
 for line in lines:
     ins, parm = line.split(" ")
     parm = int(parm)
-    # print(f"ins: {ins}, parm: {parm}")
     instructions.append([ins, parm])
 
 acc = 0
 walked = []
 
 
-def walk(next):
+def walk(n, i):
     global acc
 
-    inst = instructions[next]
+    inst = i[n]
     # print(inst)
-    if next in walked:
-        print("Hey, we hebben dit al een keer gedaan!")
-        return
+    if n in walked:
+        return "maxed"
     else:
-        walked.append(next)
+        walked.append(n)
 
     if inst[0] == "nop":
-        next += 1
+        n += 1
     if inst[0] == "acc":
         acc += inst[1]
-        next += 1
+        n += 1
     if inst[0] == "jmp":
-        next += inst[1]
-    print(f"instruction: {inst[0]} acc: {acc} | next: {next}")
-    walk(next)
+        n += inst[1]
+    walk(n, i)
 
 
-# walk(0)
+# walk(0, instructions)
 # print(acc)
 
 

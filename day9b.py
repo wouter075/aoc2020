@@ -4,8 +4,8 @@ with open('day9.txt') as f:
     lines = [int(line.rstrip()) for line in f]
 
 
-anwser = solve(25)
-m = lines.index(anwser)
+answer = solve(25)
+m = lines.index(answer)
 
 
 def summon(start, end):
@@ -26,7 +26,7 @@ for x in range(0, m):
     for y in range(0, m):
         if x == y:
             continue
-        if anwser == summon(x, y):
+        if answer == summon(x, y):
             print(extract(x, y))
             break
 
