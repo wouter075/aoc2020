@@ -7,14 +7,11 @@ for line in lines:
     parm = int(parm)
     instructions.append([ins, parm])
 
-# print(instructions)
-
 
 def walk(n, i):
     global acc
 
     inst = i[n]
-    did.append(inst)
     if inst[0] == "nop":
         n += 1
     if inst[0] == "acc":
@@ -22,14 +19,8 @@ def walk(n, i):
         n += 1
     if inst[0] == "jmp":
         n += inst[1]
-    # try:
+
     walk(n, i)
-    # except IndexError:
-    #     # print("index")
-    #     return "index"
-    # except RecursionError:
-    #     # print("recursion")
-    #     return "maxed"
 
 
 def inst_count(inst):
@@ -56,26 +47,21 @@ def inst_change(old_inst, new_inst, pos):
 nop = inst_count("nop")
 jmp = inst_count("jmp")
 
-# walked = []
-# did = []
-# acc = 0
-# walk(0, instructions)
-# print(acc)
+
 for nn in range(0, nop):
     walked = []
-    did = []
     acc = 0
     nnop = inst_change("nop", "jmp", nn)
     try:
         walk(0, nnop)
     except RecursionError:
         continue
+
     except IndexError:
         print(acc)
 
 for nj in range(0, jmp):
     walked = []
-    did = []
     acc = 0
     njmp = inst_change("jmp", "nop", nj)
     # print(njmp)
