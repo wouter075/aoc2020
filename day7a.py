@@ -59,7 +59,7 @@ for line in lines:
         }}
         # all_bags[bag_color] = []
 
-# print(all_bags)
+print(all_bags)
 # print("="*100)
 checked = []
 
@@ -75,10 +75,10 @@ def check_bag(color):
             check_bag(all_bags[color][k]['color'])
 
 
-for bag in all_bags.keys():
-    # print(bag)
-    check_bag(bag)
-
-print(len(checked))
+# for bag in all_bags.keys():
+#     # print(bag)
+#     check_bag(bag)
+#
+# print(len(checked))
 
 # first: 49
